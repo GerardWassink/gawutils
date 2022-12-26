@@ -5,9 +5,10 @@
  * Purpose: read input stream and count (groups of) characters
  * Versions:
  *   0.1  : Initial code base
+ *   0.2  : count one word for multiple consecutive whitespace caharacters
  *   
  * ------------------------------------------------------------------------- */
-#define VERSION "0.1"
+#define VERSION "0.2"
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *
@@ -36,22 +37,24 @@
  * ------------------------------------------------------------------------- */
 int main(int argc , char *argv[])
 {
-	int c, words, lines, bytes;
-	lines = words = bytes = 0;
+	int c, words, lines, bytes, inWS, prevWS;
+	lines = words = bytes = inWS = prevWS = 0;
 	
 	while ((c = getchar()) !=EOF)
 	{
-		bytes++;
-		if (c == '\n') lines++;
-		switch (c) {
-			case '\n':
-			case ' ':
-			case '\t':
-				words++;
-				break;
-			default:
-				break;
-		}
+		bytes++;					// Count every byte
+		
+		if (c == '\n') lines++;		// Count every line
+		
+		prevWS = inWS;				// Are we in whitepsace?
+		inWS = (c == '\n' || c == ' ' || c == '\t') ? 1 : 0;
+
+									// We where not in whitespace
+									//  but now we are: bump word counter
+		if (prevWS == 0 && inWS == 1) 
+			words++;
+
 	}
-	printf("lines: %d, words: %d, bytes %d\n", lines, words, bytes);
+									// Print results
+	printf("%7d %7d %7d\n", lines, words, bytes);
 }
