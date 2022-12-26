@@ -20,15 +20,22 @@ cat    :   cat.o
 cat.o  :   cat.c
 	cc -c cat.c
 
+# Util wc
+wc    :   wc.o
+	cc -o wc wc.o
+wc.o  :   wc.c
+	cc -c wc.c
+
 # All utils
-utils	: cat
+utils	: cat wc
 
 
 # All filters and utilities
-all	: cat upper lower
+all	: filters utils
 	
 # clean up
 clean :
 	rm	upper    upper.o    \
 		lower    lower.o	\
 		cat      cat.o	    \
+		wc       wc.o	    \

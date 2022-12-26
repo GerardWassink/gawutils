@@ -26,3 +26,8 @@ cat is a concatenation utility
 - looks at commandline arguments, assumes they are filenames
 - when arguments present, files are read and copied to stdout
 - when no arguments present, stdin is read and copied to stdout
+
+### wc
+wc is a counting utility
+- looks at incoming stream from stdin and:
+- counts lines, words and bytes
