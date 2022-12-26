@@ -20,3 +20,9 @@ lower is a filter program that:
 - looks for upper case letters
 - converts those to lower case
 - writes everything thru to stdout
+
+### cat
+cat is a concatenation utility
+- looks at commandline arguments, assumes they are filenames
+- when arguments present, files are read and copied to stdout
+- when no arguments present, stdin is read and copied to stdout
