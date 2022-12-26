@@ -1,0 +1,4 @@
+Test file for upper and lower functions
+<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[|]
+]^_' abcdefghijklmnopqrstuvwxyz{|}
+EOF
