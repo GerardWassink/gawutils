@@ -34,6 +34,7 @@
  * ------------------------------------------------------------------------- */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /* ------------------------------------------------------------------------- *
  *                                                              Main routine
@@ -52,8 +53,8 @@ int main(int argc , char *argv[])
 			if ((fp = fopen(*++argv, "r")) == NULL)
 			{
 								// We can't, give message
-				printf("cat: can't open %s\n", *argv);
-				break;
+				fprintf(stderr, "cat: can't open %s\n", *argv);
+				exit(1);
 			}
 								// We can, copy it to stdout
 			fileCopy(fp);
