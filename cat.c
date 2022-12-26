@@ -9,9 +9,10 @@
  * 			- when no arguments present, stdin is read and copied to stdout
  * Versions:
  *   0.1  : Initial code base
+ *   0.2  : Introduced stderr for error message
  *   
  * ------------------------------------------------------------------------- */
-#define VERSION "0.1"
+#define VERSION "0.2"
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *
