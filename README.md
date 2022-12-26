@@ -1,6 +1,8 @@
 # gawutils
 
-Oh well, I suppose lots of people have had a go at this, these are my versions of elementary Linux commands
+Oh well, I suppose lots of people have had a go at this, 
+these are my versions of elementary Linux commands.
+To be extended when I feel like it... ;-)
 
 ## filters
 The programs in this category van be used as filters in pipe constructions
