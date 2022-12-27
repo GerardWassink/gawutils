@@ -37,13 +37,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+/* ------------------------------------------------------------------------- *
+ *                                               Copy file (by fp) to stdout
+ * ------------------------------------------------------------------------- */
+void fileCopy(fp) 
+FILE *fp;
+{
+	int c;
+	while ((c = getc(fp)) != EOF)
+		putc(c, stdout);
+}
+
+
 /* ------------------------------------------------------------------------- *
  *                                                              Main routine
  * ------------------------------------------------------------------------- */
 int main(int argc , char *argv[])
 {
 	FILE *fp, *fopen();
-	void fileCopy();
 	
 	if (argc == 1) {			// No arguments, so
 		fileCopy(stdin);		//   only stdin to stdout
@@ -62,16 +74,4 @@ int main(int argc , char *argv[])
 			fclose(fp);
 		}
 	}
-}
-
-
-/* ------------------------------------------------------------------------- *
- *                                               Copy file (by fp) to stdout
- * ------------------------------------------------------------------------- */
-void fileCopy(fp) 
-FILE *fp;
-{
-	int c;
-	while ((c = getc(fp)) != EOF)
-		putc(c, stdout);
 }
