@@ -5,7 +5,7 @@ these are my versions of elementary Linux commands.
 To be extended when I feel like it... ;-)
 
 ## filters
-The programs in this category van be used as filters in pipe constructions
+The programs in this category can be used as filters in pipe constructions
 
 ### upper
 upper is a filter program that:
@@ -20,6 +20,9 @@ lower is a filter program that:
 - looks for upper case letters
 - converts those to lower case
 - writes everything thru to stdout
+
+## utils
+The programs in this category are various utilities
 
 ### cat
 cat is a concatenation utility
