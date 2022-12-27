@@ -7,6 +7,8 @@
  *   0.1  : Initial code base
  *   0.2  : count one word for multiple consecutive whitespace caharacters
  *   0.3  : added \0, \a, \b, \f, \r, \t and \v to whitespace characters
+ *   0.4  : introduced the isprintable() function
+ *          made it possible to count multiple files OR stdin
  *   
  * ------------------------------------------------------------------------- */
 #define VERSION "0.3"
@@ -32,23 +34,24 @@
  * ------------------------------------------------------------------------- */
 
 #include <stdio.h>
+#include <ctype.h>
+
 
 /* ------------------------------------------------------------------------- *
- *                                                              Main routine
+ *                                                            Count per file
  * ------------------------------------------------------------------------- */
-int main(int argc , char *argv[])
+int total_bytes = 0, total_words = 0, total_lines = 0;
+
+
+/* ------------------------------------------------------------------------- *
+ *                                                   function: isprintable()
+ * everything NOT tested for is supposed to be printable 
+ * and thus can be part of a 'word'
+ * ------------------------------------------------------------------------- */
+int isprintable(int c)
 {
-	int c, words, lines, bytes, inWS, prevWS;
-	lines = words = bytes = inWS = prevWS = 0;
-	
-	while ((c = getchar()) !=EOF)
-	{
-		bytes++;					// Count every byte
-		
-		if (c == '\n') lines++;		// Count every line
-		
-		prevWS = inWS;				// Are we in whitepsace?
-		inWS = (c == ' ' \
+  	return (   c == ' '  \
+			|| c == 0x01 \
 			|| c == '\0' \
 			|| c == '\a' \
 			|| c == '\b' \
@@ -56,7 +59,26 @@ int main(int argc , char *argv[])
 			|| c == '\r' \
 			|| c == '\t' \
 			|| c == '\f' \
-			|| c == '\v') ? 1 : 0;
+			|| c == '\v' ) ? 0 : 1;
+}
+
+
+/* ------------------------------------------------------------------------- *
+ *                                                            Count per file
+ * ------------------------------------------------------------------------- */
+void countFile(FILE *file, char *filename)
+{
+	int c, words, lines, bytes, inWS, prevWS;
+	lines = words = bytes = inWS = prevWS = 0;
+	
+	while ((c = getc(file)) !=EOF)
+	{
+		bytes++;					// Count every byte
+		
+		if (c == '\n') lines++;		// Count every line
+		
+		prevWS = inWS;				// Are we in whitepsace?
+		inWS = isprintable(c);
 
 									// We where not in whitespace
 									//  but now we are: bump word counter
@@ -64,6 +86,44 @@ int main(int argc , char *argv[])
 			words++;
 
 	}
+
 									// Print results
-	printf("%7d %7d %7d\n", lines, words, bytes);
+	printf("%5d %5d %5d %s\n", lines, words, bytes, filename);
+	
+									// Add counts to totals
+	total_bytes += bytes;
+	total_words += words;
+	total_lines += lines;
+}
+
+
+/* ------------------------------------------------------------------------- *
+ *                                                              Main routine
+ * ------------------------------------------------------------------------- */
+int main(int argc , char *argv[])
+{
+	int args;
+	FILE *fp;
+	char std_in[5] = "stdin";
+	
+	if (argc < 2)					// No filename specified, read from stdin
+	{
+		countFile(stdin, std_in);
+	} else {						// At least one argument, treat as filenames
+		for (args = 1; args < argc; args++) {
+			fp = fopen(argv[args], "r");	// Open this file for reading
+			if (!fp) 						// No luck? error and exit
+			{
+				fprintf(stderr, "cannot open file %s\n", argv[args]);
+				return 1;
+			}
+			countFile(fp, argv[args]);		// Count in this file
+			fclose(fp);						// Close the file again
+		}
+	}
+	
+	if (argc > 2)					// Print total results when needed
+		printf("%5d %5d %5d total\n", total_lines, total_words, total_bytes);
+		
+	return 0;
 }
