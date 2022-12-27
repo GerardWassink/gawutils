@@ -32,7 +32,16 @@ utils	: cat wc
 
 # All filters and utilities
 all	: filters utils
-	
+
+
+# All filters and utilities
+install	: all
+	mv upper ~/bin
+	mv lower ~/bin
+	mv cat   ~/bin
+	mv wc    ~/bin
+
+
 # clean up
 clean :
 	rm	upper    upper.o    \
