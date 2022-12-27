@@ -6,9 +6,10 @@
  * Versions:
  *   0.1  : Initial code base
  *   0.2  : count one word for multiple consecutive whitespace caharacters
+ *   0.3  : added \0, \a, \b, \f, \r, \t and \v to whitespace characters
  *   
  * ------------------------------------------------------------------------- */
-#define VERSION "0.2"
+#define VERSION "0.3"
 /* ------------------------------------------------------------------------- *
  *             GNU LICENSE CONDITIONS
  * ------------------------------------------------------------------------- *
@@ -47,7 +48,15 @@ int main(int argc , char *argv[])
 		if (c == '\n') lines++;		// Count every line
 		
 		prevWS = inWS;				// Are we in whitepsace?
-		inWS = (c == '\n' || c == ' ' || c == '\t') ? 1 : 0;
+		inWS = (c == ' ' \
+			|| c == '\0' \
+			|| c == '\a' \
+			|| c == '\b' \
+			|| c == '\n' \
+			|| c == '\r' \
+			|| c == '\t' \
+			|| c == '\f' \
+			|| c == '\v') ? 1 : 0;
 
 									// We where not in whitespace
 									//  but now we are: bump word counter

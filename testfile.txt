@@ -1,4 +1,6 @@
 Test file for upper and lower functions
 <=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[|]
 ]^_' abcdefghijklmnopqrstuvwxyz{|}
+abc123def a1 b2 a1a b2b
+/home/gerard/[GitHub]
 EOF
